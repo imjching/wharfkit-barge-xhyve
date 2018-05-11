@@ -9,11 +9,9 @@ if [ -n "${VBOX_VERSION}" ]; then
   fi
 fi
 
-: ${SHARED_FOLDER:="${1:-$HOME}"}
-
 KERNEL=$(make -C vm xhyve_kernel)
 INITRD=$(make -C vm xhyve_initrd)
-CMDLINE="$(make -C vm xhyve_cmdline) barge.shared_folder=\"${SHARED_FOLDER}\""
+CMDLINE="$(make -C vm xhyve_cmdline) barge.hostname=\"barge\""
 HDD=$(make -C vm xhyve_hdd)
 UUID=$(make -C vm xhyve_uuid)
 
@@ -39,26 +37,6 @@ if [ -n "${UUID}" ]; then
   UUID="-U ${UUID}"
 fi
 
-EXPORTS=$(bin/vmnet_export.sh "${SHARED_FOLDER}")
-if [ -n "${EXPORTS}" ]; then
-  set -e
-  sudo touch /etc/exports
-  if ! grep -qs "^${EXPORTS}$" /etc/exports; then
-    echo "${EXPORTS}" | sudo tee -a /etc/exports
-  fi
-  sudo nfsd checkexports || (echo "Please check your /etc/exports." >&2 && exit 1)
-  sudo nfsd stop
-  sudo nfsd start
-  while ! rpcinfo -u localhost nfs > /dev/null 2>&1; do
-    sleep 0.5
-  done
-  set +e
-else
-  echo "It seems your first run for xhyve with vmnet."
-  echo "You can't use NFS shared folder at this time."
-  echo "But it should be available at the next boot."
-fi
-
 /usr/libexec/bootpd
 echo "Starting VM"
 while [ 1 ]; do
@@ -68,11 +46,6 @@ while [ 1 ]; do
   fi
 done
 
-if [ -n "${EXPORTS}" ]; then
-  sudo touch /etc/exports
-  sudo sed -E -e "/^$(echo ${EXPORTS} | sed -e 's/\//\\\//g')\$/d" -i.bak /etc/exports
-  sudo nfsd restart
-fi
 rm -f vm/.mac_address
 
 exit 0

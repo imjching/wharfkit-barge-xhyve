@@ -8,7 +8,7 @@ if [ "${TERM_PROGRAM}" = "Apple_Terminal" ] ; then
       do script "${CMD}"
     end tell
 END
-elif [ "${TERM_PROGRAM}" = "iTerm.app" ] ; then
+elif [ "${TERM_PROGRAM}" = "iTerm 2.app" ] ; then
   VERSION=$(osascript -e 'tell application "iTerm" to version')
   VERSION=($(echo ${VERSION} | tr -s '.' ' '))
   WINDOW="window"
@@ -18,7 +18,7 @@ elif [ "${TERM_PROGRAM}" = "iTerm.app" ] ; then
     WINDOW="terminal"
   fi
   osascript <<END
-    tell application "iTerm"
+    tell application "iTerm 2"
       tell application "System Events" to keystroke "d" using {shift down, command down}
       tell the current session of current ${WINDOW} to write text "${CMD}"
       tell application "System Events" to keystroke "[" using {command down}

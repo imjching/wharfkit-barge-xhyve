@@ -19,7 +19,7 @@ Booting up...
 $ make ssh
 barge-xhyve: running on 192.168.64.2
 bargee@192.168.64.2's password:
-Welcome to Barge 2.0.0, Docker version 1.9.1, build 66c06d0-stripped
+Welcome to Barge 2.8.2, Docker version 18.03.1-ce, build 9ee9f40
 [bargee@barge ~]$ (echo d; echo 1; echo n; echo p; echo 1; echo; echo; echo w) | sudo fdisk /dev/vda
 [bargee@barge ~]$ sudo reboot
 reboot[332]: Executing shutdown scripts in /etc/init.d
@@ -38,7 +38,7 @@ Connection to 192.168.64.2 closed by remote host.
 $ make ssh
 barge-xhyve: running on 192.168.64.2
 bargee@192.168.64.2's password:
-Welcome to Barge 2.0.0, Docker version 1.9.1, build 66c06d0-stripped
+Welcome to Barge 2.8.2, Docker version 18.03.1-ce, build 9ee9f40
 [bargee@barge ~]$ sudo resize2fs /dev/vda1
 resize2fs 1.42.13 (17-May-2015)
 Filesystem at /dev/vda1 is mounted on /mnt/vda1; on-line resizing required

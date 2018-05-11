@@ -2,62 +2,63 @@
 
 ## Make a blank disk image on Max OS X
 
-4GB for example
+2GB (recommended) for example
 
 ```
-$ dd if=/dev/zero of=vm/barge-data.img bs=1g count=4
+$ dd if=/dev/zero of=vm/barge-data.img bs=1g count=2
 4+0 records in
 4+0 records out
-4294967296 bytes transferred in 11.520751 secs (372802719 bytes/sec)
+2147483648 bytes transferred in 7.409610 secs (289824112 bytes/sec)
 ```
 
 ## Set up a persistent disk
 
 - Boot it on xhyve
-- Download and execute [makehdd.sh](https://github.com/bargees/barge-xhyve/blob/master/contrib/makehdd/makehdd.sh)
+- Download and execute [makehdd.sh](https://github.com/imjching/wharfkit-barge-xhyve/blob/master/contrib/makehdd/makehdd.sh)
 
 ```
 $ sudo ./xhyverun.sh
 
 Welcome to Barge barge /dev/ttyS0
 barge login: bargee
-Password: 
-Welcome to Barge 2.0.0, Docker version 1.9.1, build 66c06d0-stripped
-[bargee@barge ~]$ wget https://raw.githubusercontent.com/bargees/barge-xhyve/master/contrib/makehdd/makehdd.sh
+Password:
+Welcome to Barge 2.8.2, Docker version 18.03.1-ce, build 9ee9f40
+[bargee@barge ~]$ wget https://raw.githubusercontent.com/imjching/wharfkit-barge-xhyve/master/contrib/makehdd/makehdd.sh
 [bargee@barge ~]$ chmod +x makehdd.sh
 [bargee@barge ~]$ sudo ./makehdd.sh
 [bargee@barge ~]$ sudo fdisk -l
+Disk /dev/vda: 2048 MB, 2147483648 bytes, 4194304 sectors
+2048 cylinders, 64 heads, 32 sectors/track
+Units: cylinders of 2048 * 512 = 1048576 bytes
 
-Disk /dev/vda: 4294 MB, 4294967296 bytes
-64 heads, 32 sectors/track, 4096 cylinders
-Units = cylinders of 2048 * 512 = 1048576 bytes
-
-   Device Boot      Start         End      Blocks  Id System
-/dev/vda1             956        4096     3216384  83 Linux
-/dev/vda2               1         955      977904  82 Linux swap
-
-Partition table entries are not in disk order
+Device  Boot StartCHS    EndCHS        StartLBA     EndLBA    Sectors  Size Id Type
+/dev/vda1    0,1,1       1023,63,32          32    4194303    4194272 2047M 83 Linux
 [bargee@barge ~]$ df
 Filesystem           1K-blocks      Used Available Use% Mounted on
-tmpfs                   921012     47192    873820   5% /
-devtmpfs                506040         0    506040   0% /dev
-tmpfs                   511672         0    511672   0% /run
-cgroup                  511672         0    511672   0% /sys/fs/cgroup
-/dev/vda1              2949500      4760   2767540   0% /mnt/vda1
-overlay                2949500      4760   2767540   0% /etc
+tmpfs                   917648    150656    766992  16% /
+devtmpfs                495508         0    495508   0% /dev
+tmpfs                   509804         0    509804   0% /run
+cgroup                  509804         0    509804   0% /sys/fs/cgroup
+tmpfs                   917648    150656    766992  16% /var/lib/docker
+/dev/vda1              1933120      6192   1805688   0% /mnt/vda1
+overlay                1933120      6192   1805688   0% /etc
 [bargee@barge ~]$ ls -l /etc/default/docker
--rw-r--r--    1 root     root            47 Apr 26 19:21 /etc/default/docker
+-rw-r--r--    1 root     root             0 May 11 04:59 /etc/default/docker
 [bargee@barge ~]$ ls -l /etc/init.d/start.sh
--rwxr-xr-x    1 root     root          1105 Apr 26 19:21 /etc/init.d/start.sh*
+-rwxr-xr-x    1 root     root             0 May 11 04:59 /etc/init.d/start.sh*
+[bargee@barge ~]$ ls -l /etc/init.d/init.sh
+-rwxr-xr-x    1 root     root             0 May 11 04:59 /etc/init.d/init.sh*
 [bargee@barge ~]$ sudo halt
-halt[309]: Executing shutdown scripts in /etc/init.d
+halt[422]: Executing shutdown scripts in /etc/init.d
 Stopping crond... OK
-docker[317]: Loading /etc/default/docker
-docker[317]: Stopping Docker daemon
+docker[430]: Loading /etc/default/docker
+docker[430]: Stopping Docker daemon
 Stopping sshd... OK
+Stopping haveged: stopped /usr/sbin/haveged (pid 87)
+OK
 Saving random seed... done.
-halt[309]: halt
-[bargee@barge ~]$ reboot: System halted
+halt[422]: halt
+[bargee@barge ~]$ logout
 ```
 
 Done.

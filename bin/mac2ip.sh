@@ -10,7 +10,6 @@ if [ -z "$MAC_ADDRESS" ] ; then
   exit 1
 fi
 shift
-
 awk '
 {
   if ($1 ~ /^ip_address/) {
