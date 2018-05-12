@@ -6,9 +6,9 @@
 
 ```
 $ dd if=/dev/zero of=vm/barge-data.img bs=1g count=2
-4+0 records in
-4+0 records out
-2147483648 bytes transferred in 7.409610 secs (289824112 bytes/sec)
+2+0 records in
+2+0 records out
+2147483648 bytes transferred in 8.344637 secs (257348962 bytes/sec)
 ```
 
 ## Set up a persistent disk
@@ -21,7 +21,7 @@ $ sudo ./xhyverun.sh
 
 Welcome to Barge barge /dev/ttyS0
 barge login: bargee
-Password:
+Password: bargee
 Welcome to Barge 2.8.2, Docker version 18.03.1-ce, build 9ee9f40
 [bargee@barge ~]$ wget https://raw.githubusercontent.com/imjching/wharfkit-barge-xhyve/master/contrib/makehdd/makehdd.sh
 [bargee@barge ~]$ chmod +x makehdd.sh
@@ -35,29 +35,29 @@ Device  Boot StartCHS    EndCHS        StartLBA     EndLBA    Sectors  Size Id T
 /dev/vda1    0,1,1       1023,63,32          32    4194303    4194272 2047M 83 Linux
 [bargee@barge ~]$ df
 Filesystem           1K-blocks      Used Available Use% Mounted on
-tmpfs                   917648    150656    766992  16% /
+tmpfs                   917648    150660    766988  16% /
 devtmpfs                495508         0    495508   0% /dev
 tmpfs                   509804         0    509804   0% /run
 cgroup                  509804         0    509804   0% /sys/fs/cgroup
-tmpfs                   917648    150656    766992  16% /var/lib/docker
+tmpfs                   917648    150660    766988  16% /var/lib/docker
 /dev/vda1              1933120      6192   1805688   0% /mnt/vda1
 overlay                1933120      6192   1805688   0% /etc
 [bargee@barge ~]$ ls -l /etc/default/docker
--rw-r--r--    1 root     root             0 May 11 04:59 /etc/default/docker
+-rw-r--r--    1 root     root             0 May 12 00:00 /etc/default/docker
 [bargee@barge ~]$ ls -l /etc/init.d/start.sh
--rwxr-xr-x    1 root     root             0 May 11 04:59 /etc/init.d/start.sh*
+-rwxr-xr-x    1 root     root             0 May 12 00:00 /etc/init.d/start.sh*
 [bargee@barge ~]$ ls -l /etc/init.d/init.sh
--rwxr-xr-x    1 root     root             0 May 11 04:59 /etc/init.d/init.sh*
+-rwxr-xr-x    1 root     root             0 May 12 00:00 /etc/init.d/init.sh*
 [bargee@barge ~]$ sudo halt
-halt[422]: Executing shutdown scripts in /etc/init.d
+halt[383]: Executing shutdown scripts in /etc/init.d
 Stopping crond... OK
-docker[430]: Loading /etc/default/docker
-docker[430]: Stopping Docker daemon
+docker[391]: Loading /etc/default/docker
+docker[391]: Stopping Docker daemon
 Stopping sshd... OK
 Stopping haveged: stopped /usr/sbin/haveged (pid 87)
 OK
 Saving random seed... done.
-halt[422]: halt
+halt[383]: halt
 [bargee@barge ~]$ logout
 ```
 
