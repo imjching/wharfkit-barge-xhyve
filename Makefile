@@ -17,11 +17,10 @@ clean destroy: uuid2mac-clean
 
 IP_ADDR  := `bin/mac2ip.sh $$(cat vm/.mac_address)`
 USERNAME := $(shell make -sC vm username)
-PASSWORD := $(shell make -sC vm password)
 SSH_ARGS := $(shell make -sC vm ssh_args)
 
 run up: | init
-	@sudo echo "Booting up..." # to input password at the current window in advance
+	@sudo echo "Booting up..."
 	@bin/xhyveexec.sh "$(SHARED_FOLDER)"
 
 mac: | status
@@ -31,26 +30,14 @@ ip: | status
 	@echo $(IP_ADDR)
 
 ssh: | status
-	@expect -c ' \
-		spawn -noecho ssh $(USERNAME)@'$(IP_ADDR)' $(SSH_ARGS) $(filter-out $@,$(MAKECMDGOALS)); \
-		expect "(yes/no)?" { send "yes\r"; exp_continue; } "password:" { send "$(PASSWORD)\r"; }; \
-		interact; \
-	'
+	@expect -c 'spawn -noecho ssh $(USERNAME)@'$(IP_ADDR)' $(SSH_ARGS) $(filter-out $@,$(MAKECMDGOALS)); interact'
 
 halt: | status
-	@expect -c ' \
-		spawn -noecho ssh $(USERNAME)@'$(IP_ADDR)' $(SSH_ARGS) sudo halt; \
-		expect "(yes/no)?" { send "yes\r"; exp_continue; } "password:" { send "$(PASSWORD)\r"; }; \
-		interact; \
-	'
+	@expect -c 'spawn -noecho ssh $(USERNAME)@'$(IP_ADDR)' $(SSH_ARGS) sudo halt; interact'
 	@echo "Shutting down..."
 
 reboot reload: | status
-	@expect -c ' \
-		spawn -noecho ssh $(USERNAME)@'$(IP_ADDR)' $(SSH_ARGS) sudo reboot; \
-		expect "(yes/no)?" { send "yes\r"; exp_continue; } "password:" { send "$(PASSWORD)\r"; }; \
-		interact; \
-	'
+	@expect -c 'spawn -noecho ssh $(USERNAME)@'$(IP_ADDR)' $(SSH_ARGS) sudo reboot; interact'
 	@echo "Rebooting..."
 
 env: | status

@@ -84,8 +84,7 @@ barge login:
 
 ```
 $ make ssh
-barge-xhyve: running on 192.168.64.2
-bargee@192.168.64.2's password:
+barge-xhyve: running on 192.168.65.6
 Welcome to Barge 2.8.2, Docker version 18.03.1-ce, build 9ee9f40
 [bargee@barge ~]$
 ```
@@ -111,8 +110,7 @@ or, use `make halt` on the host:
 
 ```
 $ make halt
-barge-xhyve: running on 192.168.64.2
-bargee@192.168.64.2's password:
+barge-xhyve: running on 192.168.65.6
 halt[326]: Executing shutdown scripts in /etc/init.d
 Stopping crond... OK
 docker[334]: Loading /etc/default/docker
@@ -120,7 +118,7 @@ docker[334]: Stopping Docker daemon
 Stopping sshd... OK
 Saving random seed... done.
 halt[326]: halt
-Connection to 192.168.64.2 closed by remote host.
+Connection to 192.168.65.6 closed by remote host.
 Shutting down...
 ```
 
@@ -144,12 +142,12 @@ Then, in the VM, or on the host if you have installed the Docker client:
 
 ```
 $ make env
-barge-xhyve: running on 192.168.64.2
-export DOCKER_HOST=tcp://192.168.64.2:2375;
+barge-xhyve: running on 192.168.65.6
+export DOCKER_HOST=tcp://192.168.65.6:2375;
 unset DOCKER_CERT_PATH;
 unset DOCKER_TLS_VERIFY;
 $ eval $(make env)
-barge-xhyve: running on 192.168.64.2
+barge-xhyve: running on 192.168.65.6
 
 $ docker info
 Containers: 0

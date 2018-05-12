@@ -5,7 +5,6 @@ ISO      := barge.iso
 HDD      := barge-data.img
 UUID     := B01FB25C-3A19-4759-A47A-2E353E51807D
 USERNAME := bargee
-PASSWORD := bargee
 
 all: $(KERNEL) $(INITRD) $(HDD)
 
@@ -47,9 +46,6 @@ xhyve_hdd:
 username:
 	@echo $(USERNAME)
 
-password:
-	@echo $(PASSWORD)
-
 ssh_args:
 	@echo "-q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 
@@ -59,4 +55,4 @@ clean:
 	$(RM) .mac_address
 
 .PHONY: upgrade xhyve_uuid xhyve_kernel xhyve_cmdline xhyve_hdd \
-	username password ssh_args clean
+	username ssh_args clean

@@ -17,8 +17,7 @@ $ dd if=/dev/zero bs=1g count=4 >> vm/barge-data.img
 $ make up
 Booting up...
 $ make ssh
-barge-xhyve: running on 192.168.64.2
-bargee@192.168.64.2's password:
+barge-xhyve: running on 192.168.65.6
 Welcome to Barge 2.8.2, Docker version 18.03.1-ce, build 9ee9f40
 [bargee@barge ~]$ (echo d; echo 1; echo n; echo p; echo 1; echo; echo; echo w) | sudo fdisk /dev/vda
 [bargee@barge ~]$ sudo reboot
@@ -29,15 +28,14 @@ docker[340]: Stopping Docker daemon
 Stopping sshd... OK
 Saving random seed... done.
 reboot[332]: reboot
-Connection to 192.168.64.2 closed by remote host.
+Connection to 192.168.65.6 closed by remote host.
 ```
 
 ## Resize the disk after reboot
 
 ```
 $ make ssh
-barge-xhyve: running on 192.168.64.2
-bargee@192.168.64.2's password:
+barge-xhyve: running on 192.168.65.6
 Welcome to Barge 2.8.2, Docker version 18.03.1-ce, build 9ee9f40
 [bargee@barge ~]$ sudo resize2fs /dev/vda1
 resize2fs 1.42.13 (17-May-2015)
